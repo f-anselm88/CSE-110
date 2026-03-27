@@ -1,30 +1,52 @@
-#Word Puzzle 
-
-#Program: Word puzzle game
+#Word Puzzle Game with Hints
 #Author: Anselm Munango
+#Creativity: I added a limit to the number of guesses
+#to make the game more challenging.
 
 #Step 1: Store the secret word
 secret_word = "snake"
-
-#Step 2: Initialize guesses counter
 number_of_guesses = 0
+max_attempts = 6
 
 print("Welcome to the word guessing game!")
 print("Try to guess the secret word!")
 
-#Step 3: Loop until the user guesses correctly
+#Step 2: Loop until the user guesses correctly
 guess = ""
 
-while guess != secret_word:
+while number_of_guesses < max_attempts:
     guess = input("Enter your guess: ").lower()
+
+    #Length check
+    if len(guess) != len(secret_word):
+        print((f"Please enter a {len(secret_word)} - letter word."))
+        continue
+    
     number_of_guesses += 1
 
-    if guess != secret_word:
-        print("Incorrect, try again.")
+    #Check if correct
+    if guess == secret_word:
+        print(f"Congatulations! You guessed the word {secret_word} correctly.")
+        print(f"It took you {number_of_guesses} guesses.")
+        break
 
-#Display result
-print(f"Congatulations! You guessed the word {secret_word} correctly.")
-print(F"It took you {number_of_guesses} guesses.")
+    #Generate hint
+    hint = ""
+
+    for i in range(len(secret_word)):
+        if guess[i] == secret_word[i]:
+            hint += guess[i].upper() + " "
+        elif guess[i] in secret_word:
+            hint += guess[i].lower() + " "
+        else:
+            hint += "_ "
+
+    print(f"Hint: {hint.strip()}")
+    print("Incorrect, try again.")
+
+#Final result if user fails
+if guess != secret_word:
+    print(f"Game Over! The word was {secret_word}.")
 
     
 
