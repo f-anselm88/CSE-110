@@ -11,6 +11,10 @@ max_attempts = 6
 print("Welcome to the word guessing game!")
 print("Try to guess the secret word!")
 
+#Show blanks for the secret word
+blank = "_ " * len(secret_word)
+print(f"The secret word is: {blank.strip()}")
+
 #Step 2: Loop until the user guesses correctly
 guess = ""
 
@@ -46,7 +50,8 @@ while number_of_guesses < max_attempts:
 
 #Final result if user fails
 if guess != secret_word:
-    print(f"Game Over! The word was {secret_word}.")
+    print(f"You ran out of attempts. The word was {secret_word}.")
+    print(f"You used {number_of_guesses} guesses.")
 
     
 

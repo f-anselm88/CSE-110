@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Generator</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            width: 380px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        input, select {
+            width: 90%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 95%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #667eea;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #5a67d8;
+        }
+
+        .score {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .weak { color: red; }
+        .medium { color: orange; }
+        .strong { color: green; }
+
+        .pwd {
+            background: #f3f3f3;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .copy-btn {
+            background: #333;
+            padding: 5px 8px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>🔐 Password Generator</h2>
+
+    <form method="POST">
+        <input type="number" name="length" placeholder="Password length" required>
+
+        <select name="strength">
+            <option value="weak">Weak</option>
+            <option value="medium">Medium</option>
+            <option value="strong">Strong</option>
+        </select>
+
+        <button type="submit">Generate</button>
+    </form>
+
+    {% if score %}
+        <div class="score {{ score|lower }}">
+            Strength: {{ score }}
+        </div>
+    {% endif %}
+
+    {% for p in passwords %}
+        <div class="pwd">
+            <span>{{ p }}</span>
+            <button class="copy-btn" data-password="{{ p }}" onclick="copyText(this)" data-password="{{ p }}">Copy</button>
+        </div>
+    {% endfor %}
+</div>
+
+<script>
+function copyText(button) {
+    const text = button.getAttribute("data-password");
+
+    navigator.clipboard.writeText(text).then(() => {
+        alert("Copied!");
+    }).catch(err => {
+        alert("Copy failed");
+        console.log(err);
+    });
+}
+</script>
+
+</body>
+</html>
